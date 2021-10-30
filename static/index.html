@@ -42,7 +42,7 @@ color: #FF9900;
 <span style="font-size: 18px; line-height: 1.5em;">Virginia Tech</span>
 <hr>
 
-Please see <a href="http://vision.cs.utexas.edu/projects/adapted_attributes/">this</a> for an example of how to lay out the various details of your project. You may need to provide more details than this, because you will not be submitting an associated paper to accompany the webpage. So the page should be self-contained.
+<!--Please see <a href="http://vision.cs.utexas.edu/projects/adapted_attributes/">this</a> for an example of how to lay out the various details of your project. You may need to provide more details than this, because you will not be submitting an associated paper to accompany the webpage. So the page should be self-contained.-->
 
 <!-- Goal -->
 <h3>Abstract</h3>
@@ -51,9 +51,21 @@ Facial features vary greatly from one individual to another, and even for a sing
 1.	Face filters, which overlay facial photographs with funny objects, have become commonplace like snapchat.<br>
 2.	Analysing facial expressions play an important role in developing real-time applications for biometrics, detecting drowsiness and reading a person's emotions.<br>
 3.	Unlocking mobile phones, determine age of the person<br>
-4.	Detecting dysmorphic facial signs for medical diagnosis<br>
+4.	Detecting dysmorphic facial signs for medical diagnosis
 <br><br>
 <!-- figure -->
+
+<!-- Introduction -->
+<h3>Introduction</h3>
+One of the most distinguishing features of humans is their face. Through evolution, it has become the primary method of identifying other people and expressing feelings and emotions to others. Identifying and classifying faces thus is a crucial task in many computer vision applications. Basic identification of faces allows one to track the number of people in an image. Identifying key facial features can be potentially used to identify facial expressions, which can be further extrapolated to recognising emotions and identifying emotions of a person in an image opens a lot of doors to perform further processing such as in criminal situations where it is crucial to know what state of mind someone is in. 
+<!-- <br>  Motivation behind the problem you are solving, what applications it has, any brief background on the particular domain you are working in (if not regular RBG photographs), etc. If you are using a new way to solve an existing problem, briefly mention and describe the existing approaches and tell us how your approach is new. -->
+
+<br><br>
+
+<h3>Problem statement</h3>
+Facial Key points Detection is an important and challenging computer vision Kaggle competition problem, which involves detecting facial points like centers and corners of the eyes, eyebrows, nose and mouth, among other facial features. The problem is to predict the (x, y) real valued co-ordinates in the space of image pixels of the key points for a given face image.
+<br><br>
+
 <h3>Basic Idea</h3>
 <!-- A figure that conveys the main idea behind the project or the main application being addressed. -->
 <br><br> 
@@ -62,25 +74,51 @@ Facial features vary greatly from one individual to another, and even for a sing
 <img class="img1" alt="" src="train.png">
 </div>
 
+<br><br>
+
+<!-- Approach -->
+<h3>Approach</h3>
+Dataset consists of both images and tabular data in the form of a .csv file, which contain facial key coordinates. Data preprocessing is required to remove redundancies and fill missing values. Since the dataset contains less volume of data, data augmentation would be a great help to increase the number of images.  This data after the split into train and test can be passed to the model to get predictions. The success of the model can be measured by getting the least RMSE.<br><br>
+<ul>
+<li>Data preprocessing - To avoid mis-interpretation of the data, missing values, pixel strings need to be treated.</li>
+<div class="subpoints">
+1. Data imputation to replace NaN values<br>
+2. Remove space in pixel value strings<br>
+3. Visualisation to understand insights of the data<br>
+</div>
+<li>Data Augmentation – After splitting the data into train and test, the train data considerably reduces. However, CNN requires more data to understand the complexity in the images. To solve this problem data needs to be augmented.</li>
+<div class="subpoints">
+1. Linear Contrast and gaussian blurring <br>
+2. Scaling and rotating images <br>
+3. Horizontal flip<br>
+</div>
+<li>Split data into train and test data</li>
+<div class="subpoints">
+1. Split train data into train and validation sets<br>
+</div>
+<li>Modelling</li>
+<div class="subpoints">
+1. Multi-Layer Perceptron with a couple of hidden layers and one output layer<br>
+2. Inception model<br>
+</div>
+<li>Predicting key points for test images<br></li>
+<li>To understand how well the model is performing metrics like RMSE(Root Mean Square Error) can be used to understand the extent of prediction of key points.</li>
+</ul>
+
+
+<br>
+<!-- Results -->
+<h3>Experiments</h3><h5></h5>
+<h4>Datasets</h4>
+Data is taken from Facial Key points Detection kaggle challenge. The data mainly consists of face images and coordinates of tips of eyes, eyebrow, nose and mouth in a .csv file.<br>
+<h4>Experiments</h4>
+In this project, we would experiment with data preprocessing like handling missing NaN values, treating pixel strings and visualisation of data. For the data augmentation, we plan to explore Linear Contrast and gaussian blurring, Scaling and rotating images and horizontal flip of the images. As a part of modelling, to get the basic idea of perceptron, we intend to use Multi-Layer Perceptron with a couple of hidden layers and one output layer, also a CNN inception model. RMSE can be used as a metric to understand the prediction of key point coordinates on the images.
+<!--The standard deviation of the x, y co-ordinates produced by the two trained convolution neural network models against the co-ordinates we manually create. This will performed for a small set of images and the standard deviation for both the models will be presented.-->
+<!--Provide details about the experimental set up (number of images/videos, number of datasets you experimented with, train/test split if you used machine learning algorithms, etc.). Describe the evaluation metrics you used to evaluate how well your approach is working. Include clear figures and tables, as well as illustrative qualitative examples if appropriate. Be sure to include obvious baselines to see if your approach is doing better than a naive approach (e.g. for classification accuracy, how well would a classifier do that made random decisions?). Also discuss any parameters of your algorithms, and tell us how you set the values of those parameters. You can also show us how the performance varies as you change those parameter values. Be sure to discuss any trends you see in your results, and explain why these trends make sense. Are the results as expected? Why?-->
+
 <div style="text-align: center;">
   <img class="img2" alt="" src="block.png">
   </div>
-
-<br><br>
-<!-- Introduction -->
-<h3>Introduction</h3>
-One of the most distinguishing features of humans is their face. Through evolution, it has become the primary method of identifying other people and expressing feelings and emotions to others. Identifying and classifying faces thus is a crucial task in many computer vision applications. Basic identification of faces allows one to track the number of people in an image. Identifying key facial features can be potentially used to identify facial expressions, which can be further extrapolated to recognising emotions and identifying emotions of a person in an image opens a lot of doors to perform further processing such as in criminal situations where it is crucial to know what state of mind someone is in. 
-<!-- <br>  Motivation behind the problem you are solving, what applications it has, any brief background on the particular domain you are working in (if not regular RBG photographs), etc. If you are using a new way to solve an existing problem, briefly mention and describe the existing approaches and tell us how your approach is new. -->
-
-<br><br>
-<!-- Approach -->
-<h3>Approach</h3>
-Describe very clearly and systematically your approach to solve the problem. Tell us exactly what existing implementations you used to build your system. Tell us what obstacles you faced and how you addressed them. Justify any design choices or judgment calls you made in your approach.
-
-<br><br>
-<!-- Results -->
-<h3>Experiments and results</h3>
-Provide details about the experimental set up (number of images/videos, number of datasets you experimented with, train/test split if you used machine learning algorithms, etc.). Describe the evaluation metrics you used to evaluate how well your approach is working. Include clear figures and tables, as well as illustrative qualitative examples if appropriate. Be sure to include obvious baselines to see if your approach is doing better than a naive approach (e.g. for classification accuracy, how well would a classifier do that made random decisions?). Also discuss any parameters of your algorithms, and tell us how you set the values of those parameters. You can also show us how the performance varies as you change those parameter values. Be sure to discuss any trends you see in your results, and explain why these trends make sense. Are the results as expected? Why?
 
 <br><br>
 
@@ -93,24 +131,29 @@ Provide details about the experimental set up (number of images/videos, number o
 
 <!-- Results -->
 <h3>Qualitative results</h3>
-Show several visual examples of inputs/outputs of your system (success cases and failures) that help us better understand your approach.
+To understand how well the model is performing metrics like RMSE(Root Mean Square Error) can be used to understand the extent of prediction of key points.
 <br><br>
 
-<!-- Main Results Figure --> 
+<!-- Main Results Figure 
 <div style="text-align: center;">
 <img style="height: 300px;" alt="" src="qual_results.png">
 </div>
 <br><br>
+-->
 
 <!-- Conclusion -->
-<h3>Conclusion</h3>
+<!--<h3>Conclusion</h3>
 This report has described .... Briefly summarize what you have done. 
-<br><br>
+<br><br>-->
 
 <!-- References -->
 <h3>References</h3>
-<div><a href="https://www.kaggle.com/balraj98/data-augmentation-for-facial-keypoint-detection">https://www.kaggle.com/balraj98/data-augmentation-for-facial-keypoint-detection</a></div>
-<div><a href="https://www.kaggle.com/c/facial-keypoints-detection/overview">https://www.kaggle.com/c/facial-keypoints-detection/overview</a></div>
+<ul>
+<li><div class="refs">Saptashwa Bhattacharyya. 2021.Facial Keypoints Detection: Image and Keypoints Augmentation. (May 2001). Retrieved from https://towardsdatascience.com/facial-keypoints-detection-image-and-keypoints-augmentation-6c2ea824a59</div></li>
+<li><div class="refs">Nithiroj Tripatarasit. 2019.Facial Keypoints Detection with PyTorch. (May 2019). Retrieved from https://medium.com/diving-in-deep/facial-keypoints-detection-with-pytorch-86bac79141e4</div></li>
+<li><div class="refs">Naimish Agarwal, Artus Krohn-Grimberghe, Ranjana Vyas. 2017. Facial Key Points Detection using Deep Convolutional Neural Network. arXiv:1710.00977.  Retrieved from https://arxiv.org/pdf/1710.00977.pdf</div></li>
+<li><div class="refs">Kaggle. 2020. Retrieved from https://www.kaggle.com/balraj98/data-augmentation-for-facial-keypoint-detection</div></li>
+</ul>
 <br><br>
 
 
