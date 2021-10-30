@@ -1,0 +1,23 @@
+/* @media screen and (max-width: 900px) {
+    .img1 {
+       height: 50%;
+    }
+ } */
+
+.img1 {
+    height: 600px;
+}
+
+.img2 {
+    height: 400px;
+}
+
+ @media screen and (max-width: 750px) {
+    .img1 {
+       height: 400px;
+    }
+
+    .img2 {
+        height: 260px;
+    }
+ }
