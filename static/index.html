@@ -56,8 +56,9 @@
 
       Facial features vary greatly from one individual to another, and even for a single individual, there is a large
       amount of variation due to 3D pose, size, position, viewing angle, and illumination conditions. In this project,
-      We trained a multilayer perceptron network using a unprocessed dataset and a augmented data set and used the
-      trained model to predict facial key points in a test data set and compared the accuracy of the two trained models.
+      we have used a single input, hidden, and an output layer perceptron and compared experiments between the provided
+      data (imputed missing values) vs. improved data through augmentation. Data augmentation has helped in the
+      reduction of both training and validation loss.
       Detecting key points on face images are building blocks of several applications:<br><br>
       1. Face filters, which overlay facial photographs with funny objects, have become commonplace like snapchat.<br>
       2. Analysing facial expressions play an important role in developing real-time applications for biometrics,
@@ -94,9 +95,7 @@ Facial Key points Detection is an important and challenging computer vision Kagg
 <br><br> -->
 
       <!-- <h3>Basic Idea</h3> -->
-      <br><br>
-
-      <br><br>
+      <br>
 
       <!-- Approach -->
       <h3>Approach</h3>
@@ -112,10 +111,11 @@ Facial Key points Detection is an important and challenging computer vision Kagg
           1. Data imputation to replace NaN values<br>
           <div style="text-align: center;">
             <img class="img3" alt="" src="cv-missing.png">
+            <div>Examples of missing lower lip data points</div>
           </div>
-
-          <!-- 2. Remove space in pixel value strings<br> -->
-          3. Visualisation to understand insights of the data<br>
+          <br>
+          2. Remove space in pixel value strings<br>
+          3. Visualisation to understand insights of the data<br><br>
           <div style="text-align: center;">
             <img class="img1" alt="" src="cv-hists.png">
           </div>
@@ -128,132 +128,148 @@ Facial Key points Detection is an important and challenging computer vision Kagg
           to be augmented.</li>
         <div class="subpoints">
           <!-- 1. Linear Contrast and gaussian blurring <br> -->
-          2. Scaling and rotating images <br>
+          2. Scaling and rotating images<br>
           <div style="text-align: center;">
             <img class="img3" alt="" src="cv-rotate.png">
           </div>
+          3. Horizontal flip<br>
+          <div style="text-align: center;">
+            <img class="img3" alt="" src="cv-flip.png">
+          </div>
         </div>
-        3. Horizontal flip<br>
-        <div style="text-align: center;">
-          <img class="img3" alt="" src="cv-flip.png">
+        <li>Split data into train and test data</li>
+        <div class="subpoints">
+          Since the train and test dataset is given separately in the challenge, we have divided the train data into 2
+          parts
+          which are train and validation with a split ratio of 0.2
         </div>
-    </div>
-    <li>Split data into train and test data</li>
-    <div class="subpoints">
-      1. Split train data into train and validation sets<br>
-    </div>
-    <li>Modelling</li>
-    <div class="subpoints">
-      1. Multi-Layer Perceptron with a couple of hidden layers and one output layer<br>
-      <!-- 2. Inception model<br> -->
-    </div>
-    <li>Predicting key points for test images<br></li>
-    <li>To understand how well the model is performing metrics like RMSE(Root Mean Square Error) can be used to
-      understand the extent of prediction of key points.</li>
-    </ul>
+        <li>Modelling</li>
+        <div class="subpoints">
+          Multi-Layer Perceptron with a couple of hidden layers and one output layer<br>
+          <!-- 2. Inception model<br> -->
+        </div>
+        <li>Predicting key points for test images<br></li>
+        <li>To understand how well the model is performing metrics like RMSE(Root Mean Square Error) can be used to
+          understand the extent of prediction of key points.</li>
+      </ul>
 
 
-    <br>
-    <!-- Results -->
-    <h3>Experiments</h3>
-    <h5></h5>
-    <h4>Datasets</h4>
-    Data is taken from Facial Key points Detection kaggle challenge. The data mainly consists of face images and
-    coordinates of tips of eyes, eyebrow, nose and mouth in a .csv file.<br>
-    <h4>Experiments</h4>
-    In this project, we would experiment with data preprocessing like handling missing NaN values, treating pixel
-    strings and visualisation of data. For the data augmentation, we plan to explore Linear Contrast and gaussian
-    blurring, Scaling and rotating images and horizontal flip of the images. As a part of modelling, to get the basic
-    idea of perceptron, we intend to use Multi-Layer Perceptron with a couple of hidden layers and one output layer,
-    also a CNN inception model. RMSE can be used as a metric to understand the prediction of key point coordinates on
-    the images.
-    <!--The standard deviation of the x, y co-ordinates produced by the two trained convolution neural network models against the co-ordinates we manually create. This will performed for a small set of images and the standard deviation for both the models will be presented.-->
-    <!--Provide details about the experimental set up (number of images/videos, number of datasets you experimented with, train/test split if you used machine learning algorithms, etc.). Describe the evaluation metrics you used to evaluate how well your approach is working. Include clear figures and tables, as well as illustrative qualitative examples if appropriate. Be sure to include obvious baselines to see if your approach is doing better than a naive approach (e.g. for classification accuracy, how well would a classifier do that made random decisions?). Also discuss any parameters of your algorithms, and tell us how you set the values of those parameters. You can also show us how the performance varies as you change those parameter values. Be sure to discuss any trends you see in your results, and explain why these trends make sense. Are the results as expected? Why?-->
+      <br>
+      <!-- Results -->
+      <h3>Experiments</h3>
+      <h5></h5>
+      <h4>Datasets</h4>
+      This project is inspired by the Kaggle competition “Facial Keypoints Detection.” The data consists of train and
+      test sets along with coordination of the key points of inner and outer corners of eyes, eyebrows, nose, lips, and
+      mouth. Image is provided in the form of an array of pixels as a feature. It has 7049 records and 31 features,
+      along with an array of image pixels. Data types of all the features are float64 except the image, which is an
+      object. The array of image pixels are in the form of strings. These strings are converted into integers and
+      normalized; the whole array is reshaped. Since the image is provided as pixels, to observe the data, we have
+      displayed it as an image and plotted the coordinated/ key points on the image. To understand the data, we have
+      checked the null values and distribution of each feature. Except for nose_tip_x, nose_tip_y, image, all the other
+      features have a significant number of missing values. We have analyzed some of the images with missing values
+      using the show_image function. As observed from the histogram graphs, the features follow an almost normal
+      distribution, and the number of image arrays being less, we have imputed the missing values with the mean of the
+      feature. <br>
+      <h4>Experiments</h4>
+      We choose data augmentation techniques to improve the number of images. Some of the techniques are horizontal flip
+      and image rotation. We have tried Gaussian filter and histogram equalization as well. However, we faced CPU or
+      time issues with the gaussian filter and histogram equalization. Still, we were able to increase the dataset from
+      7049 to 42294 records. We have assumed all the hyperparameters same as the above experiment to compare the loss
+      between the two experiments. As can be seen from the graph, the loss of both the train and test and has reduced.
+      <!--The standard deviation of the x, y co-ordinates produced by the two trained convolution neural network models against the co-ordinates we manually create. This will performed for a small set of images and the standard deviation for both the models will be presented.-->
+      <!--Provide details about the experimental set up (number of images/videos, number of datasets you experimented with, train/test split if you used machine learning algorithms, etc.). Describe the evaluation metrics you used to evaluate how well your approach is working. Include clear figures and tables, as well as illustrative qualitative examples if appropriate. Be sure to include obvious baselines to see if your approach is doing better than a naive approach (e.g. for classification accuracy, how well would a classifier do that made random decisions?). Also discuss any parameters of your algorithms, and tell us how you set the values of those parameters. You can also show us how the performance varies as you change those parameter values. Be sure to discuss any trends you see in your results, and explain why these trends make sense. Are the results as expected? Why?-->
 
-    <br><br>
+      <br><br>
 
-    <!-- Main Results Figure -->
-    <!--<div style="text-align: center;">
+      <!-- Main Results Figure -->
+      <!--<div style="text-align: center;">
 <img style="height: 300px;" alt="" src="results.png">
 </div>
 <br><br>
 -->
 
-    <!-- Results -->
-    <h3>Qualitative results</h3>
-    To understand how well the model is performing metrics like RMSE(Root Mean Square Error) can be used to understand
-    the extent of prediction of key points.
-    <br><br>
-    <div style="text-align: center;">
-      <img class="img2" alt="" src="cv-rmse.png">
-    </div>
+      <!-- Results -->
+      <h3>Qualitative results</h3>
+      As can be seen from the graph, the loss of both the train and test and has reduced. We have considered RMSE as a
+      metric to understand the error. From the above plots, we can say that data augmentation helped in decreasing
+      training and test error.
+      <br><br>
+      <div style="text-align: center;">
+        <img class="img2" alt="" src="cv-rmse.png">
+      </div>
 
-    <div style="text-align: center;">
-      <img class="img2" alt="" src="cv-rmse2.png">
-    </div>
+      <div style="text-align: center;">
+        <img class="img2" alt="" src="cv-rmse2.png">
+      </div>
 
 
-    <h3>Conclusion</h3>
-    This report has described a convolutional neural network approach to facial keypoints detection. Most of the
-    features
-    have around 40% of the values missing. Thus, missing values are imputed with a mean of the feature as each feature's
-    data follows a nearly normal distribution. To understand the relationship between features, we have plotted the
-    features. As we can observe from the correlation matrix, features are not correlated; therefore, we used all the
-    features for training the model. We trained the model with provided data and observed similar training and test
-    errors. To address this issue, we have done data augmentation like horizontal flip, rotation of image by 15 degrees
-    clockwise and anti-clockwise and trained the model with this data along with original data. There was a reduction in
-    training and validation errors, indicating that neural work learned the patterns better with more data.
-    <br>This project has a potential for improvement in the areas of model selection, data augmentation, and
-    experimenting
-    with hyperparameters. This project can be further extended to analyzing facial expressions, detecting dysmorphic
-    facial signs for medical diagnosis, unlocking mobile phones, and many others.
-    <!-- <br>  Motivation behind the problem you are solving, what applications it has, any brief background on the particular domain you are working in (if not regular RBG photographs), etc. If you are using a new way to solve an existing problem, briefly mention and describe the existing approaches and tell us how your approach is new. -->
+      <h3>Conclusion</h3>
+      This report has described a convolutional neural network approach to facial keypoints detection. Most of the
+      features
+      have around 40% of the values missing. Thus, missing values (NaN) are imputed with a mean of the feature as each
+      feature's
+      data follows a nearly normal distribution. To understand the relationship between features, we have plotted the
+      features. As we can observe from the correlation matrix, features are not correlated; therefore, we used all the
+      features for training the model. We trained the model with provided data and observed similar training and test
+      errors. To address this issue, we have done data augmentation like horizontal flip, rotation of image by 15
+      degrees
+      clockwise and anti-clockwise and trained the model with this data along with original data. There was a reduction
+      in
+      training and validation errors, indicating that neural work learned the patterns better with more data.
+      <br>This project has a potential for improvement in the areas of model selection, data augmentation, and
+      experimenting
+      with hyperparameters. This project can be further extended to analyzing facial expressions, detecting dysmorphic
+      facial signs for medical diagnosis, unlocking mobile phones, and many others.
+      <!-- <br>  Motivation behind the problem you are solving, what applications it has, any brief background on the particular domain you are working in (if not regular RBG photographs), etc. If you are using a new way to solve an existing problem, briefly mention and describe the existing approaches and tell us how your approach is new. -->
 
-    <br><br>
+      <br><br>
 
-    <!-- Main Results Figure 
+      <!-- Main Results Figure 
 <div style="text-align: center;">
 <img style="height: 300px;" alt="" src="qual_results.png">
 </div>
 <br><br>
 -->
 
-    <!-- Conclusion -->
-    <!--<h3>Conclusion</h3>
+      <!-- Conclusion -->
+      <!--<h3>Conclusion</h3>
 This report has described .... Briefly summarize what you have done. 
 <br><br>-->
 
-    <!-- References -->
-    <h3>References</h3>
-    <ul>
-      <li>
-        <div class="refs">Saptashwa Bhattacharyya. 2021.Facial Keypoints Detection: Image and Keypoints Augmentation.
-          (May
-          2001). Retrieved from
-          https://towardsdatascience.com/facial-keypoints-detection-image-and-keypoints-augmentation-6c2ea824a59</div>
-      </li>
-      <li>
-        <div class="refs">Nithiroj Tripatarasit. 2019.Facial Keypoints Detection with PyTorch. (May 2019). Retrieved
-          from
-          https://medium.com/diving-in-deep/facial-keypoints-detection-with-pytorch-86bac79141e4</div>
-      </li>
-      <li>
-        <div class="refs">Naimish Agarwal, Artus Krohn-Grimberghe, Ranjana Vyas. 2017. Facial Key Points Detection using
-          Deep Convolutional Neural Network. arXiv:1710.00977. Retrieved from https://arxiv.org/pdf/1710.00977.pdf</div>
-      </li>
-      <li>
-        <div class="refs">Kaggle. 2020. Retrieved from
-          https://www.kaggle.com/balraj98/data-augmentation-for-facial-keypoint-detection</div>
-      </li>
-    </ul>
-    <br><br>
+      <!-- References -->
+      <h3>References</h3>
+      <ul>
+        <li>
+          <div class="refs">Saptashwa Bhattacharyya. 2021.Facial Keypoints Detection: Image and Keypoints Augmentation.
+            (May
+            2001). Retrieved from
+            https://towardsdatascience.com/facial-keypoints-detection-image-and-keypoints-augmentation-6c2ea824a59</div>
+        </li>
+        <li>
+          <div class="refs">Nithiroj Tripatarasit. 2019.Facial Keypoints Detection with PyTorch. (May 2019). Retrieved
+            from
+            https://medium.com/diving-in-deep/facial-keypoints-detection-with-pytorch-86bac79141e4</div>
+        </li>
+        <li>
+          <div class="refs">Naimish Agarwal, Artus Krohn-Grimberghe, Ranjana Vyas. 2017. Facial Key Points Detection
+            using
+            Deep Convolutional Neural Network. arXiv:1710.00977. Retrieved from https://arxiv.org/pdf/1710.00977.pdf
+          </div>
+        </li>
+        <li>
+          <div class="refs">Kaggle. 2020. Retrieved from
+            https://www.kaggle.com/balraj98/data-augmentation-for-facial-keypoint-detection</div>
+        </li>
+      </ul>
+      <br><br>
 
 
-    <hr>
-    <footer>
-      <p>© 2021 Sindhu Chava, Oren Collaco</p>
-    </footer>
-  </div>
+      <hr>
+      <footer>
+        <p>© 2021 Sindhu Chava, Oren Collaco</p>
+      </footer>
+    </div>
   </div>
 
   <br><br>
