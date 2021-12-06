@@ -56,7 +56,7 @@
 
       Facial features vary greatly from one individual to another, and even for a single individual, there is a large
       amount of variation due to 3D pose, size, position, viewing angle, and illumination conditions. In this project,
-      we have used a single input, hidden, and an output layer perceptron and compared experiments between the provided
+      to detect facial keypoints, we have used a single input, hidden, and an output layer perceptron and compared experiments between the provided
       data (imputed missing values) vs. improved data through augmentation. Data augmentation has helped in the
       reduction of both training and validation loss.
       Detecting key points on face images are building blocks of several applications:<br><br>
@@ -87,7 +87,7 @@
       know what state of mind someone is in.
       <!-- <br>  Motivation behind the problem you are solving, what applications it has, any brief background on the particular domain you are working in (if not regular RBG photographs), etc. If you are using a new way to solve an existing problem, briefly mention and describe the existing approaches and tell us how your approach is new. -->
 
-      <br><br>
+      <br>
 
 
       <!-- <h3>Problem statement</h3>
@@ -114,8 +114,8 @@ Facial Key points Detection is an important and challenging computer vision Kagg
             <div>Examples of missing lower lip data points</div>
           </div>
           <br>
-          2. Remove space in pixel value strings<br>
-          3. Visualisation to understand insights of the data<br><br>
+          <!-- 2. Remove space in pixel value strings<br> -->
+          2. Visualisation to understand insights of the data<br><br>
           <div style="text-align: center;">
             <img class="img1" alt="" src="cv-hists.png">
           </div>
@@ -128,13 +128,17 @@ Facial Key points Detection is an important and challenging computer vision Kagg
           to be augmented.</li>
         <div class="subpoints">
           <!-- 1. Linear Contrast and gaussian blurring <br> -->
-          2. Scaling and rotating images<br>
+          1. Scaling and rotating images<br>
           <div style="text-align: center;">
             <img class="img3" alt="" src="cv-rotate.png">
           </div>
-          3. Horizontal flip<br>
+          2. Horizontal flip<br>
           <div style="text-align: center;">
             <img class="img3" alt="" src="cv-flip.png">
+          </div>
+          3. Histogram equalization (Attempted)
+          <div style="text-align: center;">
+            <img class="img2" alt="" src="cv-histequal.png">
           </div>
         </div>
         <li>Split data into train and test data</li>
@@ -145,7 +149,15 @@ Facial Key points Detection is an important and challenging computer vision Kagg
         </div>
         <li>Modelling</li>
         <div class="subpoints">
-          Multi-Layer Perceptron with a couple of hidden layers and one output layer<br>
+          Multi-Layer Perceptron with a hidden layers and an output layer<br>
+          MLP(<br>
+          (hidden_layers): ModuleList(<br>
+          (0): Linear(in_features=9216, out_features=128, bias=True)<br>
+          (1): Linear(in_features=128, out_features=64, bias=True)<br>
+          )<br>
+          (output): Linear(in_features=64, out_features=30, bias=True)<br>
+          (dropout): Dropout(p=0.1, inplace=False)<br>
+          )
           <!-- 2. Inception model<br> -->
         </div>
         <li>Predicting key points for test images<br></li>
@@ -159,7 +171,7 @@ Facial Key points Detection is an important and challenging computer vision Kagg
       <h3>Experiments</h3>
       <h5></h5>
       <h4>Datasets</h4>
-      This project is inspired by the Kaggle competition “Facial Keypoints Detection.” The data consists of train and
+      This project is inspired from the Kaggle competition “Facial Keypoints Detection.” The data consists of train and
       test sets along with coordination of the key points of inner and outer corners of eyes, eyebrows, nose, lips, and
       mouth. Image is provided in the form of an array of pixels as a feature. It has 7049 records and 31 features,
       along with an array of image pixels. Data types of all the features are float64 except the image, which is an
@@ -172,6 +184,16 @@ Facial Key points Detection is an important and challenging computer vision Kagg
       distribution, and the number of image arrays being less, we have imputed the missing values with the mean of the
       feature. <br>
       <h4>Experiments</h4>
+      To understand the relationship between the features, we have plotted a correlation matrix. As observed, there is
+      no correlation between the features, so we have continued using all the features as an input to the model. We have
+      used a basic multi-layer perceptron with PyTorch as a backbone. The model consists of a single input layer, one
+      hidden layer, and then an output layer. Before passing the data to the model, we have treated the data as per the
+      input necessary for the CNN model. Image pixel string data is converted to an integer and then normalized. Later,
+      these arrays are converted to tensors. Since the train and test dataset is given separately in the challenge, we
+      have divided the train data into two parts which are train and validation, with a split ratio of 0.2. We have used
+      a batch size of 128 and used Adam optimizer to reach the global or local minima in less time. We have observed a
+      bit of high training and test error. To address this issue, we decided to increase the number of images so that
+      the neural network could capture the right patterns. <br><br>
       We choose data augmentation techniques to improve the number of images. Some of the techniques are horizontal flip
       and image rotation. We have tried Gaussian filter and histogram equalization as well. However, we faced CPU or
       time issues with the gaussian filter and histogram equalization. Still, we were able to increase the dataset from
@@ -191,14 +213,21 @@ Facial Key points Detection is an important and challenging computer vision Kagg
 
       <!-- Results -->
       <h3>Qualitative results</h3>
-      As can be seen from the graph, the loss of both the train and test and has reduced. We have considered RMSE as a
-      metric to understand the error. From the above plots, we can say that data augmentation helped in decreasing
-      training and test error.
+      As can be seen from the following plots, the loss of both the train and validation has reduced. We have considered
+      RMSE as a
+      metric to understand the error. From the aforementioned plots, we can say that data augmentation helped in
+      decreasing
+      training and validation error.
       <br><br>
+      <div style="text-align: center;">
+        <img class="img3" alt="" src="cv-predictions.png">
+      </div>
       <div style="text-align: center;">
         <img class="img2" alt="" src="cv-rmse.png">
       </div>
-
+      <div style="text-align: center;">
+        <img class="img3" alt="" src="cv-predictions2.png">
+      </div>
       <div style="text-align: center;">
         <img class="img2" alt="" src="cv-rmse2.png">
       </div>
@@ -241,13 +270,13 @@ This report has described .... Briefly summarize what you have done.
       <h3>References</h3>
       <ul>
         <li>
-          <div class="refs">Saptashwa Bhattacharyya. 2021.Facial Keypoints Detection: Image and Keypoints Augmentation.
+          <div class="refs">Saptashwa Bhattacharyya. 2021. Facial Keypoints Detection: Image and Keypoints Augmentation.
             (May
             2001). Retrieved from
             https://towardsdatascience.com/facial-keypoints-detection-image-and-keypoints-augmentation-6c2ea824a59</div>
         </li>
         <li>
-          <div class="refs">Nithiroj Tripatarasit. 2019.Facial Keypoints Detection with PyTorch. (May 2019). Retrieved
+          <div class="refs">Nithiroj Tripatarasit. 2019. Facial Keypoints Detection with PyTorch. (May 2019). Retrieved
             from
             https://medium.com/diving-in-deep/facial-keypoints-detection-with-pytorch-86bac79141e4</div>
         </li>
@@ -261,8 +290,17 @@ This report has described .... Briefly summarize what you have done.
           <div class="refs">Kaggle. 2020. Retrieved from
             https://www.kaggle.com/balraj98/data-augmentation-for-facial-keypoint-detection</div>
         </li>
+        <li>
+          <div class="refs">Shutong Zhang, Chenyue MengKaggle. Facial keypoints detection using Neural Network.
+            Retrieved from
+            http://cs231n.stanford.edu/reports/2016/pdfs/007_Report.pdf</div>
+        </li>
+        <li>
+          <div class="refs">Badji N'Wuitcha. Retrieved from
+            https://github.com/nalbert9/Facial-Keypoint-Detection</div>
+        </li>
       </ul>
-      <br><br>
+      <br>
 
 
       <hr>
