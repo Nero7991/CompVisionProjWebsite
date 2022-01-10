@@ -56,7 +56,8 @@
 
       Facial features vary greatly from one individual to another, and even for a single individual, there is a large
       amount of variation due to 3D pose, size, position, viewing angle, and illumination conditions. In this project,
-      to detect facial keypoints, we have used a single input, hidden, and an output layer perceptron and compared experiments between the provided
+      to detect facial keypoints, we have used a single input, hidden, and an output layer perceptron and compared
+      experiments between the provided
       data (imputed missing values) vs. improved data through augmentation. Data augmentation has helped in the
       reduction of both training and validation loss.
       Detecting key points on face images are building blocks of several applications:<br><br>
@@ -116,12 +117,22 @@ Facial Key points Detection is an important and challenging computer vision Kagg
           <br>
           <!-- 2. Remove space in pixel value strings<br> -->
           2. Visualisation to understand insights of the data<br><br>
-          <div style="text-align: center;">
-            <img class="img1" alt="" src="cv-hists.png">
+          <div class="container">
+            <div class="row">
+              <div class="column">
+                <img class="img1 float-left" alt="" src="cv-hists.png">
+              </div>
+              <div class="column side-img">
+                <img class="img2 float-right" alt="" src="cv-correlation.png">
+              </div>
+            </div>
+          </div>
+          <!-- <div style="text-align: center;">
+            
           </div>
           <div style="text-align: center;">
-            <img class="img2" alt="" src="cv-correlation.png">
-          </div>
+            
+          </div> -->
         </div>
         <li>Data Augmentation – After splitting the data into train and test, the train data considerably reduces.
           However, CNN requires more data to understand the complexity in the images. To solve this problem data needs

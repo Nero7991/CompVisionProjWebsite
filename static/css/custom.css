@@ -20,6 +20,10 @@
     height: 800px;
 }
 
+.side-img {
+    margin-top: 8%;
+}
+
 .subpoints {
     margin-left: 10px;
     padding: 8px;
@@ -45,4 +49,35 @@
     .img4 {
         height: 500px;
     }
+
+    .side-img {
+        margin-top: 2%;
+    }
+
+    .column {
+        width: 100% !important;
+    }
  }
+
+ /* Three image containers (use 25% for four, and 50% for two, etc) */
+.column {
+    float: left;
+    width: 48%;
+    padding: 10px;
+  }
+  
+  /* Clear floats after image containers */
+  .row::after {
+    content: "";
+    clear: both;
+    display: table;
+  }
+
+  .center {
+    margin: 0;
+    position: absolute;
+    top: 50%;
+    left: 50%;
+    -ms-transform: translate(-50%, -50%);
+    transform: translate(-50%, -50%);
+  }
